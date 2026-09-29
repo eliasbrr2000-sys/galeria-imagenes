@@ -693,9 +693,17 @@ function renderGaleria() {
 
         renombrar.onclick = () =>
             abrirModalNombre(foto);
+        const eliminar =
+        document.createElement("button");
 
+        eliminar.className = "btn btn-eliminar";
+        eliminar.textContent = "✕ ELIMINAR";
+
+        eliminar.onclick = () =>
+        eliminarImagen(foto);
         acciones.appendChild(renombrar);
-
+        acciones.appendChild(eliminar);
+        
         info.appendChild(titulo);
         info.appendChild(archivo);
         info.appendChild(acciones);
