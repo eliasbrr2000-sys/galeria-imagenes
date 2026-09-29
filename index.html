@@ -9,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -24,1092 +23,456 @@
     --text: #d9edf7;
     --muted: #6f91a3;
     --danger: #ff4d67;
-    --success: #4cff9b;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
-
     background:
-        radial-gradient(
-            circle at 50% -20%,
-            #123650 0%,
-            transparent 40%
-        ),
-        linear-gradient(
-            180deg,
-            #07111b,
-            var(--bg)
-        );
-
+        radial-gradient(circle at 50% -20%, #123650 0%, transparent 40%),
+        linear-gradient(180deg, #07111b, var(--bg));
     color: var(--text);
-
-    font-family:
-        Consolas,
-        "Courier New",
-        monospace;
+    font-family: Consolas, "Courier New", monospace;
 }
 
-
-/* =====================================
-   HEADER
-===================================== */
+/* HEADER */
 
 header {
-
-    border-bottom:
-        1px solid var(--border);
-
-    background:
-        rgba(5, 11, 18, .92);
-
-    padding:
-        22px 30px;
-
+    border-bottom: 1px solid var(--border);
+    background: rgba(5, 11, 18, .92);
+    padding: 22px 30px;
     position: sticky;
-
     top: 0;
-
     z-index: 20;
-
-    backdrop-filter:
-        blur(12px);
+    backdrop-filter: blur(12px);
 }
-
 
 .header-content {
-
-    max-width:
-        1400px;
-
-    margin:
-        auto;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        20px;
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
-
 
 .logo {
-
-    color:
-        var(--cyan);
-
-    font-size:
-        21px;
-
-    font-weight:
-        bold;
-
-    letter-spacing:
-        2px;
+    color: var(--cyan);
+    font-size: 21px;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
-
 
 .subtitle {
-
-    color:
-        var(--muted);
-
-    font-size:
-        12px;
-
-    margin-top:
-        5px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
 }
-
 
 .online {
-
-    color:
-        var(--success);
-
-    font-size:
-        12px;
+    color: #4cff9b;
+    font-size: 12px;
 }
-
 
 .online::before {
-
-    content:
-        "●";
-
-    margin-right:
-        8px;
+    content: "●";
+    margin-right: 8px;
 }
 
-
-/* =====================================
-   CONTENIDO
-===================================== */
+/* CONTENIDO */
 
 main {
-
-    max-width:
-        1400px;
-
-    margin:
-        auto;
-
-    padding:
-        35px 25px 80px;
+    max-width: 1400px;
+    margin: auto;
+    padding: 35px 25px 80px;
 }
 
-
-/* =====================================
-   PANEL DE SUBIDA
-===================================== */
+/* UPLOAD */
 
 .upload-panel {
-
-    border:
-        1px solid var(--border);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(13,28,41,.95),
-            rgba(5,13,21,.95)
-        );
-
-    border-radius:
-        14px;
-
-    padding:
-        35px;
-
-    text-align:
-        center;
-
-    box-shadow:
-        0 0 30px
-        rgba(0, 200, 255, .05);
+    border: 1px solid var(--border);
+    background: linear-gradient(145deg, rgba(13,28,41,.95), rgba(5,13,21,.95));
+    border-radius: 14px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 200, 255, .05);
 }
-
 
 .upload-panel h2 {
-
-    color:
-        var(--cyan);
-
-    margin-top:
-        0;
-
-    font-size:
-        18px;
+    color: var(--cyan);
+    margin-top: 0;
+    font-size: 18px;
 }
-
 
 .upload-panel p {
-
-    color:
-        var(--muted);
-
-    font-size:
-        13px;
+    color: var(--muted);
+    font-size: 13px;
 }
-
 
 #archivo {
-
-    display:
-        none;
+    display: none;
 }
-
 
 .btn-upload {
-
-    display:
-        inline-block;
-
-    margin-top:
-        15px;
-
-    padding:
-        13px 24px;
-
-    border:
-        1px solid var(--cyan);
-
-    color:
-        var(--cyan);
-
-    border-radius:
-        7px;
-
-    cursor:
-        pointer;
-
-    transition:
-        .2s;
-
-    font-size:
-        13px;
+    display: inline-block;
+    margin-top: 15px;
+    padding: 13px 24px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: .2s;
+    font-size: 13px;
 }
-
 
 .btn-upload:hover {
-
-    color:
-        #001018;
-
-    background:
-        var(--cyan);
-
-    box-shadow:
-        0 0 20px
-        rgba(0,200,255,.35);
+    color: #001018;
+    background: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,200,255,.35);
 }
-
 
 #estado {
-
-    min-height:
-        20px;
-
-    margin-top:
-        17px;
-
-    color:
-        var(--success);
-
-    font-size:
-        12px;
+    min-height: 20px;
+    margin-top: 17px;
+    color: #4cff9b;
+    font-size: 12px;
 }
 
-
-/* =====================================
-   TOOLBAR
-===================================== */
+/* TOOLBAR */
 
 .toolbar {
-
-    margin-top:
-        35px;
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    gap:
-        20px;
-
-    flex-wrap:
-        wrap;
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
-
 
 .archivos-title {
-
-    color:
-        var(--cyan);
-
-    font-size:
-        15px;
+    color: var(--cyan);
+    font-size: 15px;
 }
-
 
 #contador {
-
-    color:
-        var(--muted);
-
-    font-size:
-        12px;
-
-    margin-left:
-        10px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 10px;
 }
-
 
 #buscar {
-
-    width:
-        280px;
-
-    max-width:
-        100%;
-
-    background:
-        #07121c;
-
-    color:
-        white;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        7px;
-
-    padding:
-        11px 14px;
-
-    outline:
-        none;
-
-    font-family:
-        inherit;
+    width: 280px;
+    max-width: 100%;
+    background: #07121c;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 11px 14px;
+    outline: none;
+    font-family: inherit;
 }
-
 
 #buscar:focus {
-
-    border-color:
-        var(--cyan);
-
-    box-shadow:
-        0 0 10px
-        rgba(0,200,255,.1);
+    border-color: var(--cyan);
 }
 
-
-/* =====================================
-   GALERÍA
-===================================== */
+/* GALERÍA */
 
 #galeria {
-
-    margin-top:
-        20px;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fill,
-            minmax(300px, 1fr)
-        );
-
-    gap:
-        22px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 22px;
 }
-
 
 .foto {
-
-    background:
-        var(--panel);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        11px;
-
-    overflow:
-        hidden;
-
-    transition:
-        .25s;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    overflow: hidden;
+    transition: .25s;
 }
-
 
 .foto:hover {
-
-    transform:
-        translateY(-4px);
-
-    border-color:
-        var(--cyan2);
-
-    box-shadow:
-        0 10px 30px
-        rgba(0,0,0,.35);
+    transform: translateY(-4px);
+    border-color: var(--cyan2);
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
-
 
 .imagen-contenedor {
-
-    height:
-        300px;
-
-    background:
-        #020609;
-
-    cursor:
-        zoom-in;
-
-    overflow:
-        hidden;
+    height: 300px;
+    background: #020609;
+    cursor: zoom-in;
+    overflow: hidden;
 }
-
 
 .imagen-contenedor img {
-
-    width:
-        100%;
-
-    height:
-        100%;
-
-    object-fit:
-        cover;
-
-    display:
-        block;
-
-    transition:
-        transform .3s;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .3s;
 }
-
 
 .imagen-contenedor:hover img {
-
-    transform:
-        scale(1.025);
+    transform: scale(1.025);
 }
-
 
 .info {
-
-    padding:
-        15px;
+    padding: 15px;
 }
-
 
 .titulo {
-
-    color:
-        #e6f7ff;
-
-    font-size:
-        14px;
-
-    overflow:
-        hidden;
-
-    text-overflow:
-        ellipsis;
-
-    white-space:
-        nowrap;
+    color: #e6f7ff;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
 
 .archivo-real {
-
-    margin-top:
-        7px;
-
-    color:
-        #49697a;
-
-    font-size:
-        10px;
-
-    overflow:
-        hidden;
-
-    text-overflow:
-        ellipsis;
-
-    white-space:
-        nowrap;
+    margin-top: 7px;
+    color: #49697a;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
-
-/* =====================================
-   BOTONES
-===================================== */
 
 .acciones {
-
-    margin-top:
-        14px;
-
-    display:
-        flex;
-
-    gap:
-        8px;
-
-    flex-wrap:
-        wrap;
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
 }
-
 
 .btn {
-
-    background:
-        transparent;
-
-    border:
-        1px solid var(--border);
-
-    color:
-        var(--muted);
-
-    padding:
-        8px 11px;
-
-    border-radius:
-        5px;
-
-    cursor:
-        pointer;
-
-    font-family:
-        inherit;
-
-    font-size:
-        11px;
-
-    transition:
-        .2s;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 7px 11px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
 }
-
 
 .btn:hover {
-
-    border-color:
-        var(--cyan);
-
-    color:
-        var(--cyan);
+    border-color: var(--cyan);
+    color: var(--cyan);
 }
 
+/* NUEVO: BOTÓN ELIMINAR */
 
 .btn-eliminar {
-
-    border-color:
-        #5c2430;
-
-    color:
-        var(--danger);
+    color: var(--danger);
+    border-color: #5c2430;
 }
-
 
 .btn-eliminar:hover {
-
-    border-color:
-        var(--danger);
-
-    color:
-        var(--danger);
-
-    background:
-        rgba(255, 77, 103, .08);
-
-    box-shadow:
-        0 0 12px
-        rgba(255,77,103,.15);
+    color: #ffffff;
+    border-color: var(--danger);
+    background: var(--danger);
 }
-
 
 .vacio {
-
-    grid-column:
-        1 / -1;
-
-    padding:
-        70px 20px;
-
-    text-align:
-        center;
-
-    color:
-        var(--muted);
+    grid-column: 1 / -1;
+    padding: 70px 20px;
+    text-align: center;
+    color: var(--muted);
 }
 
-
-/* =====================================
-   VISOR GRANDE
-===================================== */
+/* VISOR */
 
 #visor {
-
-    position:
-        fixed;
-
-    inset:
-        0;
-
-    background:
-        rgba(0, 5, 10, .97);
-
-    z-index:
-        100;
-
-    display:
-        none;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 5, 10, .96);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
 }
-
 
 #visor.activo {
-
-    display:
-        flex;
+    display: flex;
 }
-
 
 .visor-contenido {
-
-    width:
-        94vw;
-
-    height:
-        94vh;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+    width: 94vw;
+    height: 94vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-
 
 #imagenGrande {
-
-    max-width:
-        90vw;
-
-    max-height:
-        80vh;
-
-    object-fit:
-        contain;
-
-    box-shadow:
-        0 0 40px
-        rgba(0,200,255,.10);
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    box-shadow: 0 0 40px rgba(0,200,255,.10);
 }
-
 
 #tituloGrande {
-
-    margin-top:
-        15px;
-
-    color:
-        var(--cyan);
-
-    font-size:
-        15px;
+    margin-top: 15px;
+    color: var(--cyan);
+    font-size: 15px;
 }
-
 
 .cerrar {
-
-    position:
-        absolute;
-
-    top:
-        22px;
-
-    right:
-        30px;
-
-    color:
-        white;
-
-    font-size:
-        34px;
-
-    cursor:
-        pointer;
-
-    z-index:
-        110;
+    position: absolute;
+    top: 22px;
+    right: 30px;
+    color: white;
+    font-size: 34px;
+    cursor: pointer;
 }
-
-
-.cerrar:hover {
-
-    color:
-        var(--danger);
-}
-
 
 .nav {
-
-    position:
-        absolute;
-
-    top:
-        50%;
-
-    transform:
-        translateY(-50%);
-
-    background:
-        rgba(7,18,28,.8);
-
-    border:
-        1px solid var(--border);
-
-    color:
-        var(--cyan);
-
-    width:
-        50px;
-
-    height:
-        70px;
-
-    border-radius:
-        8px;
-
-    font-size:
-        30px;
-
-    cursor:
-        pointer;
-
-    z-index:
-        110;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(7,18,28,.8);
+    border: 1px solid var(--border);
+    color: var(--cyan);
+    width: 50px;
+    height: 70px;
+    border-radius: 8px;
+    font-size: 30px;
+    cursor: pointer;
 }
-
 
 .nav:hover {
-
-    border-color:
-        var(--cyan);
-
-    box-shadow:
-        0 0 15px
-        rgba(0,200,255,.15);
+    border-color: var(--cyan);
 }
-
 
 .anterior {
-
-    left:
-        25px;
+    left: 25px;
 }
-
 
 .siguiente {
-
-    right:
-        25px;
+    right: 25px;
 }
 
+/* MODAL NOMBRE */
 
-/* =====================================
-   MODAL RENOMBRAR
-===================================== */
-
-.modal {
-
-    position:
-        fixed;
-
-    inset:
-        0;
-
-    background:
-        rgba(0,0,0,.84);
-
-    z-index:
-        150;
-
-    display:
-        none;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
+#modalNombre {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.82);
+    z-index: 150;
+    display: none;
+    align-items: center;
+    justify-content: center;
 }
 
-
-.modal.activo {
-
-    display:
-        flex;
+#modalNombre.activo {
+    display: flex;
 }
-
 
 .modal-box {
-
-    width:
-        420px;
-
-    max-width:
-        90%;
-
-    background:
-        var(--panel);
-
-    border:
-        1px solid var(--cyan2);
-
-    border-radius:
-        10px;
-
-    padding:
-        25px;
-
-    box-shadow:
-        0 0 40px
-        rgba(0,200,255,.08);
+    width: 420px;
+    max-width: 90%;
+    background: var(--panel);
+    border: 1px solid var(--cyan2);
+    border-radius: 10px;
+    padding: 25px;
 }
-
 
 .modal-box h3 {
-
-    margin-top:
-        0;
-
-    color:
-        var(--cyan);
+    margin-top: 0;
+    color: var(--cyan);
 }
-
-
-.modal-box p {
-
-    color:
-        var(--muted);
-
-    font-size:
-        12px;
-
-    line-height:
-        1.5;
-}
-
 
 #nuevoTitulo {
-
-    width:
-        100%;
-
-    background:
-        #050c13;
-
-    border:
-        1px solid var(--border);
-
-    color:
-        white;
-
-    padding:
-        12px;
-
-    border-radius:
-        6px;
-
-    outline:
-        none;
-
-    font-family:
-        inherit;
+    width: 100%;
+    background: #050c13;
+    border: 1px solid var(--border);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    outline: none;
+    font-family: inherit;
 }
-
 
 #nuevoTitulo:focus {
-
-    border-color:
-        var(--cyan);
+    border-color: var(--cyan);
 }
-
 
 .modal-botones {
-
-    margin-top:
-        18px;
-
-    display:
-        flex;
-
-    justify-content:
-        flex-end;
-
-    gap:
-        10px;
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
-
-/* =====================================
-   RESPONSIVE
-===================================== */
-
 @media(max-width: 700px) {
-
-    header {
-
-        padding:
-            18px;
-    }
-
-    .header-content {
-
-        align-items:
-            flex-start;
-    }
-
-    .subtitle {
-
-        display:
-            none;
-    }
-
-    main {
-
-        padding:
-            20px 15px 60px;
-    }
-
-    .upload-panel {
-
-        padding:
-            25px 15px;
-    }
-
     #galeria {
-
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
     .imagen-contenedor {
-
-        height:
-            340px;
-    }
-
-    #buscar {
-
-        width:
-            100%;
-    }
-
-    .toolbar {
-
-        align-items:
-            stretch;
+        height: 340px;
     }
 
     .nav {
-
-        width:
-            40px;
-
-        height:
-            55px;
+        width: 40px;
+        height: 55px;
     }
 
     .anterior {
-
-        left:
-            8px;
+        left: 8px;
     }
 
     .siguiente {
+        right: 8px;
+    }
 
-        right:
-            8px;
+    .acciones {
+        flex-wrap: wrap;
     }
 }
-
 </style>
 </head>
 
-
 <body>
 
-
 <header>
-
 <div class="header-content">
-
     <div>
-
-        <div class="logo">
-            ◈ IMAGE VAULT
-        </div>
-
-        <div class="subtitle">
-            SECURE IMAGE REPOSITORY // SUPABASE STORAGE
-        </div>
-
+        <div class="logo">◈ IMAGE VAULT</div>
+        <div class="subtitle">SECURE IMAGE REPOSITORY // SUPABASE STORAGE</div>
     </div>
 
-    <div class="online">
-        ONLINE
-    </div>
-
+    <div class="online">ONLINE</div>
 </div>
-
 </header>
-
 
 <main>
 
-
 <section class="upload-panel">
+    <h2>&gt; UPLOAD_IMAGE</h2>
 
-    <h2>
-        &gt; UPLOAD_IMAGE
-    </h2>
+    <p>Selecciona una o varias imágenes para almacenarlas.</p>
 
-    <p>
-        Selecciona una o varias imágenes para almacenarlas.
-    </p>
-
-    <label
-        for="archivo"
-        class="btn-upload"
-    >
+    <label for="archivo" class="btn-upload">
         + SELECCIONAR ARCHIVOS
     </label>
 
-    <input
-        type="file"
-        id="archivo"
-        accept="image/*"
-        multiple
-    >
+    <input type="file"
+           id="archivo"
+           accept="image/*"
+           multiple>
 
     <div id="estado"></div>
-
 </section>
-
 
 <div class="toolbar">
 
     <div>
-
-        <span class="archivos-title">
-            &gt; ARCHIVOS
-        </span>
-
-        <span id="contador">
-            0 imágenes
-        </span>
-
+        <span class="archivos-title">&gt; ARCHIVOS</span>
+        <span id="contador">0 imágenes</span>
     </div>
-
 
     <input
         id="buscar"
@@ -1119,70 +482,36 @@ main {
 
 </div>
 
-
 <div id="galeria"></div>
-
 
 </main>
 
 
-
-<!-- =====================================
-     VISOR
-===================================== -->
+<!-- VISOR -->
 
 <div id="visor">
 
-    <div
-        class="cerrar"
-        onclick="cerrarVisor()"
-    >
-        ×
-    </div>
+    <div class="cerrar" onclick="cerrarVisor()">×</div>
 
-
-    <button
-        class="nav anterior"
-        onclick="cambiarImagen(-1)"
-    >
-        ‹
-    </button>
-
+    <button class="nav anterior" onclick="cambiarImagen(-1)">‹</button>
 
     <div class="visor-contenido">
-
         <img id="imagenGrande">
-
         <div id="tituloGrande"></div>
-
     </div>
 
-
-    <button
-        class="nav siguiente"
-        onclick="cambiarImagen(1)"
-    >
-        ›
-    </button>
+    <button class="nav siguiente" onclick="cambiarImagen(1)">›</button>
 
 </div>
 
 
+<!-- MODAL PARA CAMBIAR NOMBRE -->
 
-<!-- =====================================
-     MODAL RENOMBRAR
-===================================== -->
-
-<div
-    id="modalNombre"
-    class="modal"
->
+<div id="modalNombre">
 
     <div class="modal-box">
 
-        <h3>
-            &gt; CAMBIAR_NOMBRE
-        </h3>
+        <h3>&gt; CAMBIAR_NOMBRE</h3>
 
         <input
             id="nuevoTitulo"
@@ -1193,17 +522,11 @@ main {
 
         <div class="modal-botones">
 
-            <button
-                class="btn"
-                onclick="cerrarModalNombre()"
-            >
+            <button class="btn" onclick="cerrarModalNombre()">
                 CANCELAR
             </button>
 
-            <button
-                class="btn"
-                onclick="guardarNombre()"
-            >
+            <button class="btn" onclick="guardarNombre()">
                 GUARDAR
             </button>
 
@@ -1214,70 +537,13 @@ main {
 </div>
 
 
-
-<!-- =====================================
-     MODAL ELIMINAR
-===================================== -->
-
-<div
-    id="modalEliminar"
-    class="modal"
->
-
-    <div class="modal-box">
-
-        <h3 style="color: var(--danger);">
-            &gt; ELIMINAR_IMAGEN
-        </h3>
-
-        <p>
-            ¿Seguro que quieres eliminar esta imagen?
-        </p>
-
-        <p id="nombreEliminar"></p>
-
-        <p style="color: var(--danger);">
-            Esta acción es permanente.
-        </p>
-
-        <div class="modal-botones">
-
-            <button
-                class="btn"
-                onclick="cerrarModalEliminar()"
-            >
-                CANCELAR
-            </button>
-
-            <button
-                class="btn btn-eliminar"
-                onclick="confirmarEliminar()"
-            >
-                ✕ ELIMINAR
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
 <script>
-
-
-/* =====================================
-   SUPABASE
-===================================== */
 
 const SUPABASE_URL =
 "https://xllayzonrzhgvnrgprfc.supabase.co";
 
-
 const SUPABASE_KEY =
 "sb_publishable_lP6yJIkPE3rOG0IPAzwPyw_s2gY8nuJ";
-
 
 const cliente =
 window.supabase.createClient(
@@ -1285,391 +551,174 @@ window.supabase.createClient(
     SUPABASE_KEY
 );
 
+const BUCKET = "imagenes";
 
-const BUCKET =
-"imagenes";
+let imagenes = [];
+let imagenesFiltradas = [];
 
+let indiceVisor = 0;
+let archivoEditando = null;
 
-/* =====================================
-   VARIABLES
-===================================== */
-
-let imagenes =
-[];
-
-
-let imagenesFiltradas =
-[];
+const input = document.getElementById("archivo");
+const galeria = document.getElementById("galeria");
+const estado = document.getElementById("estado");
+const contador = document.getElementById("contador");
+const buscar = document.getElementById("buscar");
 
 
-let indiceVisor =
-0;
-
-
-let archivoEditando =
-null;
-
-
-let imagenAEliminar =
-null;
-
-
-/* =====================================
-   ELEMENTOS
-===================================== */
-
-const input =
-document.getElementById(
-    "archivo"
-);
-
-
-const galeria =
-document.getElementById(
-    "galeria"
-);
-
-
-const estado =
-document.getElementById(
-    "estado"
-);
-
-
-const contador =
-document.getElementById(
-    "contador"
-);
-
-
-const buscar =
-document.getElementById(
-    "buscar"
-);
-
-
-/* =====================================
-   CARGAR GALERÍA
-===================================== */
+/* ==============================
+   CARGAR IMÁGENES
+============================== */
 
 async function cargarGaleria() {
 
     galeria.innerHTML =
-        '<div class="vacio">' +
-        '&gt; CARGANDO_ARCHIVOS...' +
-        '</div>';
+    '<div class="vacio">&gt; CARGANDO_ARCHIVOS...</div>';
 
-
-    const {
-        data: archivos,
-        error
-    } =
-    await cliente
-        .storage
+    const { data: archivos, error } =
+    await cliente.storage
         .from(BUCKET)
-        .list(
-            "",
-            {
-                limit: 500,
-
-                sortBy: {
-                    column: "created_at",
-                    order: "desc"
-                }
+        .list("", {
+            limit: 500,
+            sortBy: {
+                column: "created_at",
+                order: "desc"
             }
-        );
-
+        });
 
     if (error) {
-
-        console.error(
-            error
-        );
-
+        console.error(error);
         galeria.innerHTML =
-            '<div class="vacio">' +
-            'ERROR: No se pudo cargar Storage.' +
-            '</div>';
-
+        '<div class="vacio">ERROR: No se pudo cargar Storage.</div>';
         return;
     }
 
-
-    const {
-        data: titulos,
-        error: errorTitulos
-    } =
+    const { data: titulos, error: errorTitulos } =
     await cliente
-        .from(
-            "imagenes_info"
-        )
-        .select(
-            "archivo,titulo"
-        );
-
+        .from("imagenes_info")
+        .select("archivo,titulo");
 
     if (errorTitulos) {
-
-        console.error(
-            errorTitulos
-        );
+        console.error(errorTitulos);
     }
 
-
-    const mapaTitulos =
-    {};
-
+    const mapaTitulos = {};
 
     if (titulos) {
-
-        titulos.forEach(
-            item => {
-
-                mapaTitulos[
-                    item.archivo
-                ] =
-                    item.titulo;
-            }
-        );
+        titulos.forEach(item => {
+            mapaTitulos[item.archivo] = item.titulo;
+        });
     }
 
+    imagenes = archivos
+        .filter(a => a.name !== ".emptyFolderPlaceholder")
+        .map(a => {
 
-    imagenes =
-        archivos
+            const { data } =
+            cliente.storage
+                .from(BUCKET)
+                .getPublicUrl(a.name);
 
-        .filter(
-            archivo =>
-                archivo.name !==
-                ".emptyFolderPlaceholder"
-        )
+            return {
+                archivo: a.name,
+                titulo:
+                    mapaTitulos[a.name] ||
+                    "Sin nombre",
+                url: data.publicUrl
+            };
+        });
 
-        .map(
-            archivo => {
-
-                const {
-                    data
-                } =
-                cliente
-                    .storage
-                    .from(BUCKET)
-                    .getPublicUrl(
-                        archivo.name
-                    );
-
-
-                return {
-
-                    archivo:
-                        archivo.name,
-
-                    titulo:
-                        mapaTitulos[
-                            archivo.name
-                        ] ||
-                        "Sin nombre",
-
-                    url:
-                        data.publicUrl
-                };
-            }
-        );
-
-
-    aplicarBusqueda();
-
-}
-
-
-/* =====================================
-   BUSCADOR
-===================================== */
-
-function aplicarBusqueda() {
-
-    const texto =
-        buscar
-            .value
-            .trim()
-            .toLowerCase();
-
-
-    imagenesFiltradas =
-        imagenes.filter(
-            foto =>
-
-                foto
-                    .titulo
-                    .toLowerCase()
-                    .includes(
-                        texto
-                    )
-        );
-
+    imagenesFiltradas = [...imagenes];
 
     renderGaleria();
 }
 
 
-/* =====================================
+/* ==============================
    DIBUJAR GALERÍA
-===================================== */
+============================== */
 
 function renderGaleria() {
 
     contador.textContent =
         imagenes.length === 1
-
         ? "1 imagen"
+        : imagenes.length + " imágenes";
 
-        : imagenes.length +
-          " imágenes";
-
-
-    if (
-        imagenesFiltradas.length === 0
-    ) {
+    if (!imagenesFiltradas.length) {
 
         galeria.innerHTML =
-            '<div class="vacio">' +
-            '&gt; NO_HAY_IMAGENES' +
-            '</div>';
+        '<div class="vacio">&gt; NO_HAY_IMAGENES</div>';
 
         return;
     }
 
+    galeria.innerHTML = "";
 
-    galeria.innerHTML =
-        "";
-
-
-    imagenesFiltradas.forEach(
-        (foto, index) => {
-
+    imagenesFiltradas.forEach((foto, index) => {
 
         const tarjeta =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        tarjeta.className =
-            "foto";
-
-
-        /* IMAGEN */
+        tarjeta.className = "foto";
 
         const imagenContenedor =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
         imagenContenedor.className =
             "imagen-contenedor";
 
-
         const img =
-            document.createElement(
-                "img"
-            );
+            document.createElement("img");
 
+        img.src = foto.url;
+        img.alt = foto.titulo;
+        img.loading = "lazy";
 
-        img.src =
-            foto.url;
+        imagenContenedor.appendChild(img);
 
-
-        img.alt =
-            foto.titulo;
-
-
-        img.loading =
-            "lazy";
-
-
-        imagenContenedor
-            .appendChild(
-                img
-            );
-
-
-        imagenContenedor.onclick =
-            () =>
-                abrirVisor(
-                    index
-                );
-
-
-        /* INFO */
+        imagenContenedor.onclick = () =>
+            abrirVisor(index);
 
         const info =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        info.className =
-            "info";
-
+        info.className = "info";
 
         const titulo =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        titulo.className =
-            "titulo";
-
-        titulo.textContent =
-            foto.titulo;
-
+        titulo.className = "titulo";
+        titulo.textContent = foto.titulo;
 
         const archivo =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        archivo.className =
-            "archivo-real";
-
-        archivo.textContent =
-            foto.archivo;
-
-
-        /* ACCIONES */
+        archivo.className = "archivo-real";
+        archivo.textContent = foto.archivo;
 
         const acciones =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-        acciones.className =
-            "acciones";
+        acciones.className = "acciones";
 
 
-        /* RENOMBRAR */
+        /* BOTÓN RENOMBRAR */
 
         const renombrar =
-            document.createElement(
-                "button"
-            );
+            document.createElement("button");
 
-        renombrar.className =
-            "btn";
+        renombrar.className = "btn";
+        renombrar.textContent = "✎ RENOMBRAR";
 
-        renombrar.textContent =
-            "✎ RENOMBRAR";
+        renombrar.onclick = () =>
+            abrirModalNombre(foto);
 
 
-        renombrar.onclick =
-            () =>
-                abrirModalNombre(
-                    foto
-                );
-
-
-        /* ELIMINAR */
+        /* BOTÓN ELIMINAR */
 
         const eliminar =
-            document.createElement(
-                "button"
-            );
+            document.createElement("button");
 
         eliminar.className =
             "btn btn-eliminar";
@@ -1677,271 +726,134 @@ function renderGaleria() {
         eliminar.textContent =
             "✕ ELIMINAR";
 
-
-        eliminar.onclick =
-            () =>
-                abrirModalEliminar(
-                    foto
-                );
+        eliminar.onclick = () =>
+            eliminarImagen(foto);
 
 
-        acciones.appendChild(
-            renombrar
-        );
+        acciones.appendChild(renombrar);
+        acciones.appendChild(eliminar);
 
+        info.appendChild(titulo);
+        info.appendChild(archivo);
+        info.appendChild(acciones);
 
-        acciones.appendChild(
-            eliminar
-        );
+        tarjeta.appendChild(imagenContenedor);
+        tarjeta.appendChild(info);
 
-
-        info.appendChild(
-            titulo
-        );
-
-
-        info.appendChild(
-            archivo
-        );
-
-
-        info.appendChild(
-            acciones
-        );
-
-
-        tarjeta.appendChild(
-            imagenContenedor
-        );
-
-
-        tarjeta.appendChild(
-            info
-        );
-
-
-        galeria.appendChild(
-            tarjeta
-        );
+        galeria.appendChild(tarjeta);
 
     });
-
 }
 
 
-/* =====================================
-   SUBIR IMÁGENES
-===================================== */
+/* ==============================
+   SUBIR
+============================== */
 
-input.addEventListener(
-    "change",
-    async () => {
-
+input.addEventListener("change", async () => {
 
     const archivos =
-        Array.from(
-            input.files
-        );
+        Array.from(input.files);
 
-
-    if (
-        archivos.length === 0
-    ) {
-
+    if (!archivos.length)
         return;
-    }
-
 
     estado.textContent =
         "> SUBIENDO_ARCHIVOS...";
 
+    for (const archivo of archivos) {
 
-    for (
-        const archivo
-        of archivos
-    ) {
-
-
-        if (
-            !archivo.type
-                .startsWith(
-                    "image/"
-                )
-        ) {
-
+        if (!archivo.type.startsWith("image/"))
             continue;
-        }
 
-
-        const extension =
-            archivo.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
+        let extension =
+            archivo.name.split(".").pop();
 
         const nombreArchivo =
+            Date.now() +
+            "-" +
+            crypto.randomUUID() +
+            "." +
+            extension;
 
-            Date.now()
-
-            + "-"
-
-            + crypto.randomUUID()
-
-            + "."
-
-            + extension;
-
-
-        /* SUBIR A STORAGE */
-
-        const {
-            error
-        } =
-        await cliente
-            .storage
+        const { error } =
+        await cliente.storage
             .from(BUCKET)
             .upload(
                 nombreArchivo,
                 archivo,
                 {
                     upsert: false,
-
-                    cacheControl:
-                        "3600"
+                    cacheControl: "3600"
                 }
             );
 
-
         if (error) {
 
-            console.error(
-                error
-            );
+            console.error(error);
 
             estado.textContent =
-                "> ERROR: "
-                + error.message;
+                "> ERROR: " + error.message;
 
             return;
         }
 
-
-        /* NOMBRE INICIAL */
-
         const nombreInicial =
-            archivo.name.replace(
-                /\.[^/.]+$/,
-                ""
-            );
+            archivo.name.replace(/\.[^/.]+$/, "");
 
-
-        const {
-            error: errorInfo
-        } =
+        const { error: errorInfo } =
         await cliente
-            .from(
-                "imagenes_info"
-            )
-            .insert(
-                {
-                    archivo:
-                        nombreArchivo,
-
-                    titulo:
-                        nombreInicial
-                }
-            );
-
+            .from("imagenes_info")
+            .insert({
+                archivo: nombreArchivo,
+                titulo: nombreInicial
+            });
 
         if (errorInfo) {
-
-            console.error(
-                errorInfo
-            );
+            console.error(errorInfo);
         }
-
     }
 
-
-    input.value =
-        "";
-
+    input.value = "";
 
     estado.textContent =
         "> UPLOAD_COMPLETADO";
-
 
     await cargarGaleria();
 
 });
 
 
-/* =====================================
+/* ==============================
    RENOMBRAR
-===================================== */
+============================== */
 
-function abrirModalNombre(
-    foto
-) {
+function abrirModalNombre(foto) {
 
-    archivoEditando =
-        foto.archivo;
+    archivoEditando = foto.archivo;
 
-
-    document
-        .getElementById(
-            "nuevoTitulo"
-        )
-        .value =
-
-        foto.titulo ===
-        "Sin nombre"
-
+    document.getElementById("nuevoTitulo").value =
+        foto.titulo === "Sin nombre"
         ? ""
-
         : foto.titulo;
 
-
     document
-        .getElementById(
-            "modalNombre"
-        )
-        .classList
-        .add(
-            "activo"
-        );
+        .getElementById("modalNombre")
+        .classList.add("activo");
 
-
-    setTimeout(
-        () => {
-
-            document
-                .getElementById(
-                    "nuevoTitulo"
-                )
-                .focus();
-
-        },
-        50
-    );
+    setTimeout(() => {
+        document.getElementById("nuevoTitulo").focus();
+    }, 50);
 }
 
 
 function cerrarModalNombre() {
 
     document
-        .getElementById(
-            "modalNombre"
-        )
-        .classList
-        .remove(
-            "activo"
-        );
+        .getElementById("modalNombre")
+        .classList.remove("activo");
 
-
-    archivoEditando =
-        null;
+    archivoEditando = null;
 }
 
 
@@ -1949,381 +861,203 @@ async function guardarNombre() {
 
     const nuevo =
         document
-            .getElementById(
-                "nuevoTitulo"
-            )
+            .getElementById("nuevoTitulo")
             .value
             .trim();
 
-
-    if (
-        !nuevo ||
-        !archivoEditando
-    ) {
-
+    if (!nuevo || !archivoEditando)
         return;
-    }
 
-
-    const {
-        data,
-        error
-    } =
+    const { data, error } =
     await cliente
-        .from(
-            "imagenes_info"
-        )
-        .update(
-            {
-                titulo:
-                    nuevo
-            }
-        )
+        .from("imagenes_info")
+        .update({
+            titulo: nuevo
+        })
         .eq(
             "archivo",
             archivoEditando
         )
         .select();
 
-
     if (error) {
+        alert("Error: " + error.message);
+        return;
+    }
 
-        alert(
-            "Error: "
-            + error.message
-        );
+    if (!data || data.length === 0) {
+
+        const { error: insertError } =
+        await cliente
+            .from("imagenes_info")
+            .insert({
+                archivo: archivoEditando,
+                titulo: nuevo
+            });
+
+        if (insertError) {
+            alert("Error: " + insertError.message);
+            return;
+        }
+    }
+
+    cerrarModalNombre();
+
+    await cargarGaleria();
+}
+
+
+/* ==============================
+   ELIMINAR
+============================== */
+
+async function eliminarImagen(foto) {
+
+    const confirmar = confirm(
+        '¿Seguro que quieres eliminar "' +
+        foto.titulo +
+        '"?\n\nEsta acción no se puede deshacer.'
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    estado.textContent =
+        "> ELIMINANDO_IMAGEN...";
+
+
+    /*
+       1. ELIMINAR DE STORAGE
+    */
+
+    const { error: storageError } =
+        await cliente.storage
+            .from(BUCKET)
+            .remove([
+                foto.archivo
+            ]);
+
+
+    if (storageError) {
+
+        console.error(storageError);
+
+        estado.textContent =
+            "> ERROR AL ELIMINAR: " +
+            storageError.message;
 
         return;
     }
 
 
     /*
-       Si la imagen es antigua
-       y todavía no tiene registro
+       2. ELIMINAR EL NOMBRE
+       DE imagenes_info
     */
 
-    if (
-        !data ||
-        data.length === 0
-    ) {
-
-
-        const {
-            error: insertError
-        } =
+    const { error: databaseError } =
         await cliente
-            .from(
-                "imagenes_info"
-            )
-            .insert(
-                {
-                    archivo:
-                        archivoEditando,
-
-                    titulo:
-                        nuevo
-                }
-            );
-
-
-        if (
-            insertError
-        ) {
-
-            alert(
-                "Error: "
-                + insertError.message
-            );
-
-            return;
-        }
-
-    }
-
-
-    cerrarModalNombre();
-
-
-    estado.textContent =
-        "> NOMBRE_ACTUALIZADO";
-
-
-    await cargarGaleria();
-
-}
-
-
-/* =====================================
-   ELIMINAR
-===================================== */
-
-function abrirModalEliminar(
-    foto
-) {
-
-    imagenAEliminar =
-        foto;
-
-
-    document
-        .getElementById(
-            "nombreEliminar"
-        )
-        .textContent =
-
-        foto.titulo;
-
-
-    document
-        .getElementById(
-            "modalEliminar"
-        )
-        .classList
-        .add(
-            "activo"
-        );
-}
-
-
-function cerrarModalEliminar() {
-
-    document
-        .getElementById(
-            "modalEliminar"
-        )
-        .classList
-        .remove(
-            "activo"
-        );
-
-
-    imagenAEliminar =
-        null;
-}
-
-
-async function confirmarEliminar() {
-
-    if (
-        !imagenAEliminar
-    ) {
-
-        return;
-    }
-
-
-    const foto =
-        imagenAEliminar;
-
-
-    estado.textContent =
-        "> ELIMINANDO_IMAGEN...";
-
-
-    /* CERRAR MODAL */
-
-    document
-        .getElementById(
-            "modalEliminar"
-        )
-        .classList
-        .remove(
-            "activo"
-        );
-
-
-    /* ELIMINAR STORAGE */
-
-    const {
-        error: storageError
-    } =
-    await cliente
-        .storage
-        .from(BUCKET)
-        .remove(
-            [
+            .from("imagenes_info")
+            .delete()
+            .eq(
+                "archivo",
                 foto.archivo
-            ]
-        );
+            );
 
 
-    if (
-        storageError
-    ) {
+    if (databaseError) {
 
-        console.error(
-            storageError
-        );
-
+        console.error(databaseError);
 
         estado.textContent =
-            "> ERROR_STORAGE: "
-            + storageError.message;
+            "> IMAGEN ELIMINADA // ERROR EN METADATOS";
 
-
-        imagenAEliminar =
-            null;
-
-
-        return;
-    }
-
-
-    /* ELIMINAR METADATOS */
-
-    const {
-        error: databaseError
-    } =
-    await cliente
-        .from(
-            "imagenes_info"
-        )
-        .delete()
-        .eq(
-            "archivo",
-            foto.archivo
-        );
-
-
-    if (
-        databaseError
-    ) {
-
-        console.error(
-            databaseError
-        );
-
-
-        estado.textContent =
-            "> IMAGEN_ELIMINADA "
-            + "// ERROR_METADATA";
-
-    }
-
-    else {
+    } else {
 
         estado.textContent =
             "> IMAGEN_ELIMINADA";
     }
 
 
-    imagenAEliminar =
-        null;
-
+    /*
+       3. RECARGAR GALERÍA
+    */
 
     await cargarGaleria();
-
 }
 
 
-/* =====================================
-   BUSCAR
-===================================== */
+/* ==============================
+   BUSCADOR
+============================== */
 
-buscar.addEventListener(
-    "input",
-    aplicarBusqueda
-);
+buscar.addEventListener("input", () => {
+
+    const texto =
+        buscar.value
+            .trim()
+            .toLowerCase();
+
+    imagenesFiltradas =
+        imagenes.filter(foto =>
+            foto.titulo
+                .toLowerCase()
+                .includes(texto)
+        );
+
+    renderGaleria();
+
+});
 
 
-/* =====================================
-   VISOR
-===================================== */
+/* ==============================
+   VISOR GRANDE
+============================== */
 
-function abrirVisor(
-    index
-) {
+function abrirVisor(index) {
 
-    indiceVisor =
-        index;
-
+    indiceVisor = index;
 
     mostrarImagenVisor();
 
-
     document
-        .getElementById(
-            "visor"
-        )
-        .classList
-        .add(
-            "activo"
-        );
+        .getElementById("visor")
+        .classList.add("activo");
 
-
-    document.body.style.overflow =
-        "hidden";
+    document.body.style.overflow = "hidden";
 }
 
 
 function mostrarImagenVisor() {
 
-    if (
-        imagenesFiltradas.length === 0
-    ) {
-
+    if (!imagenesFiltradas.length)
         return;
-    }
-
 
     const foto =
-        imagenesFiltradas[
-            indiceVisor
-        ];
+        imagenesFiltradas[indiceVisor];
 
-
-    document
-        .getElementById(
-            "imagenGrande"
-        )
-        .src =
+    document.getElementById("imagenGrande").src =
         foto.url;
 
-
-    document
-        .getElementById(
-            "tituloGrande"
-        )
-        .textContent =
+    document.getElementById("tituloGrande").textContent =
         foto.titulo;
 }
 
 
-function cambiarImagen(
-    direccion
-) {
+function cambiarImagen(direccion) {
 
-    if (
-        imagenesFiltradas.length === 0
-    ) {
+    indiceVisor += direccion;
 
-        return;
-    }
-
-
-    indiceVisor +=
-        direccion;
-
-
-    if (
-        indiceVisor < 0
-    ) {
-
+    if (indiceVisor < 0)
         indiceVisor =
-            imagenesFiltradas.length
-            - 1;
-    }
-
+            imagenesFiltradas.length - 1;
 
     if (
         indiceVisor >=
         imagenesFiltradas.length
-    ) {
-
-        indiceVisor =
-            0;
-    }
-
+    )
+        indiceVisor = 0;
 
     mostrarImagenVisor();
 }
@@ -2332,173 +1066,45 @@ function cambiarImagen(
 function cerrarVisor() {
 
     document
-        .getElementById(
-            "visor"
-        )
-        .classList
-        .remove(
-            "activo"
-        );
+        .getElementById("visor")
+        .classList.remove("activo");
 
-
-    document.body.style.overflow =
-        "";
+    document.body.style.overflow = "";
 }
 
 
-/* =====================================
+/* ==============================
    TECLADO
-===================================== */
+============================== */
 
-document.addEventListener(
-    "keydown",
-    event => {
+document.addEventListener("keydown", e => {
 
-
-    const visorActivo =
+    const visor =
         document
-            .getElementById(
-                "visor"
-            )
+            .getElementById("visor")
             .classList
-            .contains(
-                "activo"
-            );
+            .contains("activo");
 
+    if (visor) {
 
-    const modalNombreActivo =
-        document
-            .getElementById(
-                "modalNombre"
-            )
-            .classList
-            .contains(
-                "activo"
-            );
-
-
-    const modalEliminarActivo =
-        document
-            .getElementById(
-                "modalEliminar"
-            )
-            .classList
-            .contains(
-                "activo"
-            );
-
-
-    if (
-        event.key ===
-        "Escape"
-    ) {
-
-
-        if (
-            modalNombreActivo
-        ) {
-
-            cerrarModalNombre();
-
-            return;
-        }
-
-
-        if (
-            modalEliminarActivo
-        ) {
-
-            cerrarModalEliminar();
-
-            return;
-        }
-
-
-        if (
-            visorActivo
-        ) {
-
+        if (e.key === "Escape")
             cerrarVisor();
-        }
 
-    }
+        if (e.key === "ArrowLeft")
+            cambiarImagen(-1);
 
-
-    if (
-        visorActivo
-    ) {
-
-
-        if (
-            event.key ===
-            "ArrowLeft"
-        ) {
-
-            cambiarImagen(
-                -1
-            );
-        }
-
-
-        if (
-            event.key ===
-            "ArrowRight"
-        ) {
-
-            cambiarImagen(
-                1
-            );
-        }
-
-    }
-
-
-    /*
-       Enter para guardar nombre
-    */
-
-    if (
-        modalNombreActivo &&
-        event.key ===
-        "Enter"
-    ) {
-
-        guardarNombre();
+        if (e.key === "ArrowRight")
+            cambiarImagen(1);
     }
 
 });
 
 
-/* =====================================
-   CERRAR VISOR AL PULSAR FONDO
-===================================== */
-
-document
-    .getElementById(
-        "visor"
-    )
-    .addEventListener(
-        "click",
-        event => {
-
-
-        if (
-            event.target.id ===
-            "visor"
-        ) {
-
-            cerrarVisor();
-        }
-
-    );
-
-
-/* =====================================
+/* ==============================
    INICIAR
-===================================== */
+============================== */
 
 cargarGaleria();
-
 
 </script>
 
