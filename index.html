@@ -6,6 +6,9 @@
 
     <title>Mi Galería</title>
 
+    <!-- Librería oficial de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -26,7 +29,7 @@
         }
 
         main {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 30px auto;
             padding: 20px;
         }
@@ -57,6 +60,11 @@
             display: none;
         }
 
+        #estado {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
         #galeria {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -76,17 +84,23 @@
             height: 220px;
             object-fit: cover;
             border-radius: 8px;
+            display: block;
         }
 
-        .foto button {
-            width: 100%;
+        .nombre {
+            font-size: 12px;
             margin-top: 8px;
-            padding: 8px;
-            border: none;
-            background: #dc2626;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .vacio {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #666;
+            padding: 40px;
         }
     </style>
 </head>
@@ -95,16 +109,19 @@
 
 <header>
     <h1>Mi Galería</h1>
-    <p>Galería de imágenes</p>
+    <p>Galería de imágenes almacenadas en la nube</p>
 </header>
 
 <main>
 
     <div class="cargador">
 
-        <h2>Cargar imágenes</h2>
+        <h2>Subir imágenes</h2>
 
-        <p>Selecciona una o varias imágenes desde tu dispositivo.</p>
+        <p>
+            Selecciona una o varias imágenes.
+            Las imágenes quedarán almacenadas permanentemente.
+        </p>
 
         <label for="archivo" class="boton">
             Seleccionar imágenes
@@ -117,6 +134,8 @@
             multiple
         >
 
+        <div id="estado"></div>
+
     </div>
 
     <div id="galeria"></div>
@@ -125,43 +144,201 @@
 
 <script>
 
-const input = document.getElementById("archivo");
-const galeria = document.getElementById("galeria");
+const SUPABASE_URL =
+    "https://xllayzonrzhgvnrgprfc.supabase.co";
 
-input.addEventListener("change", function() {
+const SUPABASE_KEY =
+    "sb_publishable_lP6yJIkPE3rOG0IPAzwPyw_s2gY8nuJ";
 
-    const archivos = Array.from(input.files);
+const clienteSupabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+const BUCKET = "imagenes";
+
+const input =
+    document.getElementById("archivo");
+
+const galeria =
+    document.getElementById("galeria");
+
+const estado =
+    document.getElementById("estado");
+
+
+/* ==========================================
+   CARGAR GALERÍA
+========================================== */
+
+async function cargarGaleria() {
+
+    galeria.innerHTML =
+        '<div class="vacio">Cargando imágenes...</div>';
+
+    const { data, error } =
+        await clienteSupabase
+            .storage
+            .from(BUCKET)
+            .list("", {
+                limit: 100,
+                sortBy: {
+                    column: "created_at",
+                    order: "desc"
+                }
+            });
+
+    if (error) {
+
+        console.error(error);
+
+        galeria.innerHTML =
+            '<div class="vacio">Error cargando la galería.</div>';
+
+        return;
+    }
+
+    const archivos =
+        data.filter(item => item.name !== ".emptyFolderPlaceholder");
+
+    if (archivos.length === 0) {
+
+        galeria.innerHTML =
+            '<div class="vacio">Todavía no hay imágenes.</div>';
+
+        return;
+    }
+
+    galeria.innerHTML = "";
 
     archivos.forEach(archivo => {
 
-        if (!archivo.type.startsWith("image/")) {
-            return;
-        }
+        const { data: urlData } =
+            clienteSupabase
+                .storage
+                .from(BUCKET)
+                .getPublicUrl(archivo.name);
 
-        const url = URL.createObjectURL(archivo);
+        const contenedor =
+            document.createElement("div");
 
-        const contenedor = document.createElement("div");
         contenedor.className = "foto";
 
-        const imagen = document.createElement("img");
-        imagen.src = url;
+        const imagen =
+            document.createElement("img");
 
-        const boton = document.createElement("button");
-        boton.textContent = "Eliminar";
+        imagen.src =
+            urlData.publicUrl;
 
-        boton.addEventListener("click", function() {
-            URL.revokeObjectURL(url);
-            contenedor.remove();
-        });
+        imagen.alt =
+            archivo.name;
+
+        imagen.loading =
+            "lazy";
+
+        const nombre =
+            document.createElement("div");
+
+        nombre.className =
+            "nombre";
+
+        nombre.textContent =
+            archivo.name;
 
         contenedor.appendChild(imagen);
-        contenedor.appendChild(boton);
+        contenedor.appendChild(nombre);
 
         galeria.appendChild(contenedor);
 
     });
 
-});
+}
+
+
+/* ==========================================
+   SUBIR IMÁGENES
+========================================== */
+
+input.addEventListener(
+    "change",
+    async function() {
+
+        const archivos =
+            Array.from(input.files);
+
+        if (archivos.length === 0) {
+            return;
+        }
+
+        estado.textContent =
+            "Subiendo imágenes...";
+
+        for (const archivo of archivos) {
+
+            if (!archivo.type.startsWith("image/")) {
+                continue;
+            }
+
+            /*
+             * Generamos un nombre único para evitar
+             * que dos archivos se sobrescriban.
+             */
+
+            const extension =
+                archivo.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+            const nombreArchivo =
+                Date.now() +
+                "-" +
+                crypto.randomUUID() +
+                "." +
+                extension;
+
+            const { error } =
+                await clienteSupabase
+                    .storage
+                    .from(BUCKET)
+                    .upload(
+                        nombreArchivo,
+                        archivo,
+                        {
+                            cacheControl: "3600",
+                            upsert: false
+                        }
+                    );
+
+            if (error) {
+
+                console.error(error);
+
+                estado.textContent =
+                    "Error al subir una imagen: " +
+                    error.message;
+
+                return;
+            }
+        }
+
+        estado.textContent =
+            "Imágenes subidas correctamente.";
+
+        input.value = "";
+
+        await cargarGaleria();
+
+    }
+);
+
+
+/* ==========================================
+   CARGAR AL ABRIR LA PÁGINA
+========================================== */
+
+cargarGaleria();
 
 </script>
 
