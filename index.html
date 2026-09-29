@@ -1,342 +1,1002 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mi Galería</title>
+<title>Image Vault</title>
 
-    <!-- Librería oficial de Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f4f4f4;
-            color: #222;
-        }
+:root {
+    --bg: #050b12;
+    --panel: #0a1520;
+    --panel2: #0d1c29;
+    --border: #17384d;
+    --cyan: #00c8ff;
+    --cyan2: #007ea7;
+    --text: #d9edf7;
+    --muted: #6f91a3;
+    --danger: #ff4d67;
+}
 
-        header {
-            background: #111827;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 50% -20%, #123650 0%, transparent 40%),
+        linear-gradient(180deg, #07111b, var(--bg));
+    color: var(--text);
+    font-family: Consolas, "Courier New", monospace;
+}
 
-        main {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 20px;
-        }
+/* HEADER */
 
-        .cargador {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+header {
+    border-bottom: 1px solid var(--border);
+    background: rgba(5, 11, 18, .92);
+    padding: 22px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(12px);
+}
 
-        .boton {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+.header-content {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
 
-        .boton:hover {
-            background: #1d4ed8;
-        }
+.logo {
+    color: var(--cyan);
+    font-size: 21px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
 
-        #archivo {
-            display: none;
-        }
+.subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
 
-        #estado {
-            margin-top: 18px;
-            font-weight: bold;
-        }
+.online {
+    color: #4cff9b;
+    font-size: 12px;
+}
 
-        #galeria {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
+.online::before {
+    content: "●";
+    margin-right: 8px;
+}
 
-        .foto {
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+/* CONTENIDO */
 
-        .foto img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 8px;
-            display: block;
-        }
+main {
+    max-width: 1400px;
+    margin: auto;
+    padding: 35px 25px 80px;
+}
 
-        .nombre {
-            font-size: 12px;
-            margin-top: 8px;
-            color: #666;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+/* UPLOAD */
 
-        .vacio {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #666;
-            padding: 40px;
-        }
-    </style>
+.upload-panel {
+    border: 1px solid var(--border);
+    background: linear-gradient(145deg, rgba(13,28,41,.95), rgba(5,13,21,.95));
+    border-radius: 14px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 200, 255, .05);
+}
+
+.upload-panel h2 {
+    color: var(--cyan);
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.upload-panel p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+#archivo {
+    display: none;
+}
+
+.btn-upload {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 13px 24px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: .2s;
+    font-size: 13px;
+}
+
+.btn-upload:hover {
+    color: #001018;
+    background: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,200,255,.35);
+}
+
+#estado {
+    min-height: 20px;
+    margin-top: 17px;
+    color: #4cff9b;
+    font-size: 12px;
+}
+
+/* TOOLBAR */
+
+.toolbar {
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.archivos-title {
+    color: var(--cyan);
+    font-size: 15px;
+}
+
+#contador {
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+#buscar {
+    width: 280px;
+    max-width: 100%;
+    background: #07121c;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 11px 14px;
+    outline: none;
+    font-family: inherit;
+}
+
+#buscar:focus {
+    border-color: var(--cyan);
+}
+
+/* GALERÍA */
+
+#galeria {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 22px;
+}
+
+.foto {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    overflow: hidden;
+    transition: .25s;
+}
+
+.foto:hover {
+    transform: translateY(-4px);
+    border-color: var(--cyan2);
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+.imagen-contenedor {
+    height: 300px;
+    background: #020609;
+    cursor: zoom-in;
+    overflow: hidden;
+}
+
+.imagen-contenedor img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .3s;
+}
+
+.imagen-contenedor:hover img {
+    transform: scale(1.025);
+}
+
+.info {
+    padding: 15px;
+}
+
+.titulo {
+    color: #e6f7ff;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.archivo-real {
+    margin-top: 7px;
+    color: #49697a;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.acciones {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 7px 11px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.btn:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+.vacio {
+    grid-column: 1 / -1;
+    padding: 70px 20px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* VISOR */
+
+#visor {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 5, 10, .96);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#visor.activo {
+    display: flex;
+}
+
+.visor-contenido {
+    width: 94vw;
+    height: 94vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#imagenGrande {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    box-shadow: 0 0 40px rgba(0,200,255,.10);
+}
+
+#tituloGrande {
+    margin-top: 15px;
+    color: var(--cyan);
+    font-size: 15px;
+}
+
+.cerrar {
+    position: absolute;
+    top: 22px;
+    right: 30px;
+    color: white;
+    font-size: 34px;
+    cursor: pointer;
+}
+
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(7,18,28,.8);
+    border: 1px solid var(--border);
+    color: var(--cyan);
+    width: 50px;
+    height: 70px;
+    border-radius: 8px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.nav:hover {
+    border-color: var(--cyan);
+}
+
+.anterior {
+    left: 25px;
+}
+
+.siguiente {
+    right: 25px;
+}
+
+/* MODAL NOMBRE */
+
+#modalNombre {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.82);
+    z-index: 150;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#modalNombre.activo {
+    display: flex;
+}
+
+.modal-box {
+    width: 420px;
+    max-width: 90%;
+    background: var(--panel);
+    border: 1px solid var(--cyan2);
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.modal-box h3 {
+    margin-top: 0;
+    color: var(--cyan);
+}
+
+#nuevoTitulo {
+    width: 100%;
+    background: #050c13;
+    border: 1px solid var(--border);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    outline: none;
+    font-family: inherit;
+}
+
+#nuevoTitulo:focus {
+    border-color: var(--cyan);
+}
+
+.modal-botones {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@media(max-width: 700px) {
+    #galeria {
+        grid-template-columns: 1fr;
+    }
+
+    .imagen-contenedor {
+        height: 340px;
+    }
+
+    .nav {
+        width: 40px;
+        height: 55px;
+    }
+
+    .anterior {
+        left: 8px;
+    }
+
+    .siguiente {
+        right: 8px;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <h1>Mi Galería</h1>
-    <p>Galería de imágenes almacenadas en la nube</p>
+<div class="header-content">
+    <div>
+        <div class="logo">◈ IMAGE VAULT</div>
+        <div class="subtitle">SECURE IMAGE REPOSITORY // SUPABASE STORAGE</div>
+    </div>
+
+    <div class="online">ONLINE</div>
+</div>
 </header>
 
 <main>
 
-    <div class="cargador">
+<section class="upload-panel">
+    <h2>&gt; UPLOAD_IMAGE</h2>
 
-        <h2>Subir imágenes</h2>
+    <p>Selecciona una o varias imágenes para almacenarlas.</p>
 
-        <p>
-            Selecciona una o varias imágenes.
-            Las imágenes quedarán almacenadas permanentemente.
-        </p>
+    <label for="archivo" class="btn-upload">
+        + SELECCIONAR ARCHIVOS
+    </label>
 
-        <label for="archivo" class="boton">
-            Seleccionar imágenes
-        </label>
+    <input type="file"
+           id="archivo"
+           accept="image/*"
+           multiple>
+
+    <div id="estado"></div>
+</section>
+
+<div class="toolbar">
+
+    <div>
+        <span class="archivos-title">&gt; ARCHIVOS</span>
+        <span id="contador">0 imágenes</span>
+    </div>
+
+    <input
+        id="buscar"
+        type="text"
+        placeholder="Buscar por nombre..."
+    >
+
+</div>
+
+<div id="galeria"></div>
+
+</main>
+
+
+<!-- VISOR -->
+
+<div id="visor">
+
+    <div class="cerrar" onclick="cerrarVisor()">×</div>
+
+    <button class="nav anterior" onclick="cambiarImagen(-1)">‹</button>
+
+    <div class="visor-contenido">
+        <img id="imagenGrande">
+        <div id="tituloGrande"></div>
+    </div>
+
+    <button class="nav siguiente" onclick="cambiarImagen(1)">›</button>
+
+</div>
+
+
+<!-- MODAL PARA CAMBIAR NOMBRE -->
+
+<div id="modalNombre">
+
+    <div class="modal-box">
+
+        <h3>&gt; CAMBIAR_NOMBRE</h3>
 
         <input
-            type="file"
-            id="archivo"
-            accept="image/*"
-            multiple
+            id="nuevoTitulo"
+            type="text"
+            maxlength="100"
+            placeholder="Nombre de la imagen"
         >
 
-        <div id="estado"></div>
+        <div class="modal-botones">
+
+            <button class="btn" onclick="cerrarModalNombre()">
+                CANCELAR
+            </button>
+
+            <button class="btn" onclick="guardarNombre()">
+                GUARDAR
+            </button>
+
+        </div>
 
     </div>
 
-    <div id="galeria"></div>
+</div>
 
-</main>
 
 <script>
 
 const SUPABASE_URL =
-    "https://xllayzonrzhgvnrgprfc.supabase.co";
+"https://xllayzonrzhgvnrgprfc.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_lP6yJIkPE3rOG0IPAzwPyw_s2gY8nuJ";
+"sb_publishable_lP6yJIkPE3rOG0IPAzwPyw_s2gY8nuJ";
 
-const clienteSupabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+const cliente =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 const BUCKET = "imagenes";
 
-const input =
-    document.getElementById("archivo");
+let imagenes = [];
+let imagenesFiltradas = [];
 
-const galeria =
-    document.getElementById("galeria");
+let indiceVisor = 0;
+let archivoEditando = null;
 
-const estado =
-    document.getElementById("estado");
+const input = document.getElementById("archivo");
+const galeria = document.getElementById("galeria");
+const estado = document.getElementById("estado");
+const contador = document.getElementById("contador");
+const buscar = document.getElementById("buscar");
 
 
-/* ==========================================
-   CARGAR GALERÍA
-========================================== */
+/* ==============================
+   CARGAR IMÁGENES
+============================== */
 
 async function cargarGaleria() {
 
     galeria.innerHTML =
-        '<div class="vacio">Cargando imágenes...</div>';
+    '<div class="vacio">&gt; CARGANDO_ARCHIVOS...</div>';
 
-    const { data, error } =
-        await clienteSupabase
-            .storage
-            .from(BUCKET)
-            .list("", {
-                limit: 100,
-                sortBy: {
-                    column: "created_at",
-                    order: "desc"
-                }
-            });
+    const { data: archivos, error } =
+    await cliente.storage
+        .from(BUCKET)
+        .list("", {
+            limit: 500,
+            sortBy: {
+                column: "created_at",
+                order: "desc"
+            }
+        });
 
     if (error) {
-
         console.error(error);
-
         galeria.innerHTML =
-            '<div class="vacio">Error cargando la galería.</div>';
-
+        '<div class="vacio">ERROR: No se pudo cargar Storage.</div>';
         return;
     }
 
-    const archivos =
-        data.filter(item => item.name !== ".emptyFolderPlaceholder");
+    const { data: titulos, error: errorTitulos } =
+    await cliente
+        .from("imagenes_info")
+        .select("archivo,titulo");
 
-    if (archivos.length === 0) {
+    if (errorTitulos) {
+        console.error(errorTitulos);
+    }
+
+    const mapaTitulos = {};
+
+    if (titulos) {
+        titulos.forEach(item => {
+            mapaTitulos[item.archivo] = item.titulo;
+        });
+    }
+
+    imagenes = archivos
+        .filter(a => a.name !== ".emptyFolderPlaceholder")
+        .map(a => {
+
+            const { data } =
+            cliente.storage
+                .from(BUCKET)
+                .getPublicUrl(a.name);
+
+            return {
+                archivo: a.name,
+                titulo:
+                    mapaTitulos[a.name] ||
+                    "Sin nombre",
+                url: data.publicUrl
+            };
+        });
+
+    imagenesFiltradas = [...imagenes];
+
+    renderGaleria();
+}
+
+
+/* ==============================
+   DIBUJAR GALERÍA
+============================== */
+
+function renderGaleria() {
+
+    contador.textContent =
+        imagenes.length === 1
+        ? "1 imagen"
+        : imagenes.length + " imágenes";
+
+    if (!imagenesFiltradas.length) {
 
         galeria.innerHTML =
-            '<div class="vacio">Todavía no hay imágenes.</div>';
+        '<div class="vacio">&gt; NO_HAY_IMAGENES</div>';
 
         return;
     }
 
     galeria.innerHTML = "";
 
-    archivos.forEach(archivo => {
+    imagenesFiltradas.forEach((foto, index) => {
 
-        const { data: urlData } =
-            clienteSupabase
-                .storage
-                .from(BUCKET)
-                .getPublicUrl(archivo.name);
-
-        const contenedor =
+        const tarjeta =
             document.createElement("div");
 
-        contenedor.className = "foto";
+        tarjeta.className = "foto";
 
-        const imagen =
+        const imagenContenedor =
+            document.createElement("div");
+
+        imagenContenedor.className =
+            "imagen-contenedor";
+
+        const img =
             document.createElement("img");
 
-        imagen.src =
-            urlData.publicUrl;
+        img.src = foto.url;
+        img.alt = foto.titulo;
+        img.loading = "lazy";
 
-        imagen.alt =
-            archivo.name;
+        imagenContenedor.appendChild(img);
 
-        imagen.loading =
-            "lazy";
+        imagenContenedor.onclick = () =>
+            abrirVisor(index);
 
-        const nombre =
+        const info =
             document.createElement("div");
 
-        nombre.className =
-            "nombre";
+        info.className = "info";
 
-        nombre.textContent =
-            archivo.name;
+        const titulo =
+            document.createElement("div");
 
-        contenedor.appendChild(imagen);
-        contenedor.appendChild(nombre);
+        titulo.className = "titulo";
+        titulo.textContent = foto.titulo;
 
-        galeria.appendChild(contenedor);
+        const archivo =
+            document.createElement("div");
+
+        archivo.className = "archivo-real";
+        archivo.textContent = foto.archivo;
+
+        const acciones =
+            document.createElement("div");
+
+        acciones.className = "acciones";
+
+        const renombrar =
+            document.createElement("button");
+
+        renombrar.className = "btn";
+        renombrar.textContent = "✎ RENOMBRAR";
+
+        renombrar.onclick = () =>
+            abrirModalNombre(foto);
+
+        acciones.appendChild(renombrar);
+
+        info.appendChild(titulo);
+        info.appendChild(archivo);
+        info.appendChild(acciones);
+
+        tarjeta.appendChild(imagenContenedor);
+        tarjeta.appendChild(info);
+
+        galeria.appendChild(tarjeta);
 
     });
-
 }
 
 
-/* ==========================================
-   SUBIR IMÁGENES
-========================================== */
+/* ==============================
+   SUBIR
+============================== */
 
-input.addEventListener(
-    "change",
-    async function() {
+input.addEventListener("change", async () => {
 
-        const archivos =
-            Array.from(input.files);
+    const archivos =
+        Array.from(input.files);
 
-        if (archivos.length === 0) {
+    if (!archivos.length)
+        return;
+
+    estado.textContent =
+        "> SUBIENDO_ARCHIVOS...";
+
+    for (const archivo of archivos) {
+
+        if (!archivo.type.startsWith("image/"))
+            continue;
+
+        let extension =
+            archivo.name.split(".").pop();
+
+        const nombreArchivo =
+            Date.now() +
+            "-" +
+            crypto.randomUUID() +
+            "." +
+            extension;
+
+        const { error } =
+        await cliente.storage
+            .from(BUCKET)
+            .upload(
+                nombreArchivo,
+                archivo,
+                {
+                    upsert: false,
+                    cacheControl: "3600"
+                }
+            );
+
+        if (error) {
+
+            console.error(error);
+
+            estado.textContent =
+                "> ERROR: " + error.message;
+
             return;
         }
 
-        estado.textContent =
-            "Subiendo imágenes...";
+        /*
+        Guardamos inicialmente el nombre
+        original de la imagen como título.
+        Luego puedes cambiarlo.
+        */
 
-        for (const archivo of archivos) {
+        const nombreInicial =
+            archivo.name.replace(/\.[^/.]+$/, "");
 
-            if (!archivo.type.startsWith("image/")) {
-                continue;
-            }
+        const { error: errorInfo } =
+        await cliente
+            .from("imagenes_info")
+            .insert({
+                archivo: nombreArchivo,
+                titulo: nombreInicial
+            });
 
-            /*
-             * Generamos un nombre único para evitar
-             * que dos archivos se sobrescriban.
-             */
-
-            const extension =
-                archivo.name
-                    .split(".")
-                    .pop()
-                    .toLowerCase();
-
-            const nombreArchivo =
-                Date.now() +
-                "-" +
-                crypto.randomUUID() +
-                "." +
-                extension;
-
-            const { error } =
-                await clienteSupabase
-                    .storage
-                    .from(BUCKET)
-                    .upload(
-                        nombreArchivo,
-                        archivo,
-                        {
-                            cacheControl: "3600",
-                            upsert: false
-                        }
-                    );
-
-            if (error) {
-
-                console.error(error);
-
-                estado.textContent =
-                    "Error al subir una imagen: " +
-                    error.message;
-
-                return;
-            }
+        if (errorInfo) {
+            console.error(errorInfo);
         }
-
-        estado.textContent =
-            "Imágenes subidas correctamente.";
-
-        input.value = "";
-
-        await cargarGaleria();
-
     }
-);
+
+    input.value = "";
+
+    estado.textContent =
+        "> UPLOAD_COMPLETADO";
+
+    await cargarGaleria();
+
+});
 
 
-/* ==========================================
-   CARGAR AL ABRIR LA PÁGINA
-========================================== */
+/* ==============================
+   RENOMBRAR
+============================== */
+
+function abrirModalNombre(foto) {
+
+    archivoEditando = foto.archivo;
+
+    document.getElementById("nuevoTitulo").value =
+        foto.titulo === "Sin nombre"
+        ? ""
+        : foto.titulo;
+
+    document
+        .getElementById("modalNombre")
+        .classList.add("activo");
+
+    setTimeout(() => {
+        document.getElementById("nuevoTitulo").focus();
+    }, 50);
+}
+
+
+function cerrarModalNombre() {
+
+    document
+        .getElementById("modalNombre")
+        .classList.remove("activo");
+
+    archivoEditando = null;
+}
+
+
+async function guardarNombre() {
+
+    const nuevo =
+        document
+            .getElementById("nuevoTitulo")
+            .value
+            .trim();
+
+    if (!nuevo || !archivoEditando)
+        return;
+
+    /*
+    Primero intentamos actualizar.
+    */
+
+    const { data, error } =
+    await cliente
+        .from("imagenes_info")
+        .update({
+            titulo: nuevo
+        })
+        .eq(
+            "archivo",
+            archivoEditando
+        )
+        .select();
+
+    if (error) {
+        alert("Error: " + error.message);
+        return;
+    }
+
+    /*
+    Si es una imagen antigua y todavía
+    no existe en imagenes_info, creamos
+    el registro.
+    */
+
+    if (!data || data.length === 0) {
+
+        const { error: insertError } =
+        await cliente
+            .from("imagenes_info")
+            .insert({
+                archivo: archivoEditando,
+                titulo: nuevo
+            });
+
+        if (insertError) {
+            alert("Error: " + insertError.message);
+            return;
+        }
+    }
+
+    cerrarModalNombre();
+
+    await cargarGaleria();
+}
+
+
+/* ==============================
+   BUSCADOR
+============================== */
+
+buscar.addEventListener("input", () => {
+
+    const texto =
+        buscar.value
+            .trim()
+            .toLowerCase();
+
+    imagenesFiltradas =
+        imagenes.filter(foto =>
+            foto.titulo
+                .toLowerCase()
+                .includes(texto)
+        );
+
+    renderGaleria();
+
+});
+
+
+/* ==============================
+   VISOR GRANDE
+============================== */
+
+function abrirVisor(index) {
+
+    indiceVisor = index;
+
+    mostrarImagenVisor();
+
+    document
+        .getElementById("visor")
+        .classList.add("activo");
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function mostrarImagenVisor() {
+
+    if (!imagenesFiltradas.length)
+        return;
+
+    const foto =
+        imagenesFiltradas[indiceVisor];
+
+    document.getElementById("imagenGrande").src =
+        foto.url;
+
+    document.getElementById("tituloGrande").textContent =
+        foto.titulo;
+}
+
+
+function cambiarImagen(direccion) {
+
+    indiceVisor += direccion;
+
+    if (indiceVisor < 0)
+        indiceVisor =
+            imagenesFiltradas.length - 1;
+
+    if (
+        indiceVisor >=
+        imagenesFiltradas.length
+    )
+        indiceVisor = 0;
+
+    mostrarImagenVisor();
+}
+
+
+function cerrarVisor() {
+
+    document
+        .getElementById("visor")
+        .classList.remove("activo");
+
+    document.body.style.overflow = "";
+}
+
+
+/* TECLADO */
+
+document.addEventListener("keydown", e => {
+
+    const visor =
+        document
+            .getElementById("visor")
+            .classList
+            .contains("activo");
+
+    if (visor) {
+
+        if (e.key === "Escape")
+            cerrarVisor();
+
+        if (e.key === "ArrowLeft")
+            cambiarImagen(-1);
+
+        if (e.key === "ArrowRight")
+            cambiarImagen(1);
+    }
+
+});
+
+
+/* INICIAR */
 
 cargarGaleria();
 
